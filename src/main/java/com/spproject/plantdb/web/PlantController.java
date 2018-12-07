@@ -36,6 +36,12 @@ public class PlantController {
 	@Autowired
 	private FertilizerTypeRepository frepo;
 	
+	public int getCount() {
+		List<Plant> plants = new ArrayList<>();
+		plants = (List<Plant>) prepo.findAll();
+		int plantCount = plants.size();
+		return plantCount;
+	}
 	
 	// Login page
 	@RequestMapping(value = "/login")
@@ -46,11 +52,8 @@ public class PlantController {
 	// Show all plants and get plant count
 	@RequestMapping(value = "/home")
 	public String home(Model model) {
-		List<Plant> plants = new ArrayList<>();
-		plants = (List<Plant>) prepo.findAll();
-		int plantCount = plants.size();
-		model.addAttribute("plants", plants);
-		model.addAttribute("count", plantCount);
+		model.addAttribute("plants", prepo.findAll());
+		model.addAttribute("count", getCount());
 		return "home";
 	}
 
@@ -72,9 +75,11 @@ public class PlantController {
 		if (ascOrDesc) {
 			ascOrDesc = false;
 			model.addAttribute("plants", prepo.findAllByOrderByEngNameAsc());
+			model.addAttribute("count", getCount());
 		} else {
 			ascOrDesc = true;
 			model.addAttribute("plants", prepo.findAllByOrderByEngNameDesc());
+			model.addAttribute("count", getCount());
 		}
 		return "home";
 	}
@@ -85,9 +90,11 @@ public class PlantController {
 		if (ascOrDesc) {
 			ascOrDesc = false;
 			model.addAttribute("plants", prepo.findAllByOrderByLatNameAsc());
+			model.addAttribute("count", getCount());
 		} else {
 			ascOrDesc = true;
 			model.addAttribute("plants", prepo.findAllByOrderByLatNameDesc());
+			model.addAttribute("count", getCount());
 		}
 		return "home";
 	}
@@ -98,9 +105,11 @@ public class PlantController {
 		if (ascOrDesc) {
 			ascOrDesc = false;
 			model.addAttribute("plants", prepo.findAllByOrderByFinNameAsc());
+			model.addAttribute("count", getCount());
 		} else {
 			ascOrDesc = true;
 			model.addAttribute("plants", prepo.findAllByOrderByFinNameDesc());
+			model.addAttribute("count", getCount());
 		}
 		return "home";
 	}
@@ -111,9 +120,11 @@ public class PlantController {
 		if (ascOrDesc) {
 			ascOrDesc = false;
 			model.addAttribute("plants", prepo.findAllByOrderByWtype_NameAsc());
+			model.addAttribute("count", getCount());
 		} else {
 			ascOrDesc = true;
 			model.addAttribute("plants", prepo.findAllByOrderByWtype_NameDesc());
+			model.addAttribute("count", getCount());
 		}
 		return "home";
 	}
@@ -124,9 +135,11 @@ public class PlantController {
 		if (ascOrDesc) {
 			ascOrDesc = false;
 			model.addAttribute("plants", prepo.findAllByOrderByFtype_NameAsc());
+			model.addAttribute("count", getCount());
 		} else {
 			ascOrDesc = true;
 			model.addAttribute("plants", prepo.findAllByOrderByFtype_NameDesc());
+			model.addAttribute("count", getCount());
 		}
 		return "home";
 	}
@@ -137,9 +150,11 @@ public class PlantController {
 		if (ascOrDesc) {
 			ascOrDesc = false;
 			model.addAttribute("plants", prepo.findAllByOrderByLtype_NameAsc());
+			model.addAttribute("count", getCount());
 		} else {
 			ascOrDesc = true;
 			model.addAttribute("plants", prepo.findAllByOrderByLtype_NameDesc());
+			model.addAttribute("count", getCount());
 		}
 		return "home";
 	}
@@ -157,6 +172,7 @@ public class PlantController {
 		model.addAttribute("plants", prepo
 				.findByEngNameIgnoreCaseContainingOrLatNameIgnoreCaseContainingOrFinNameIgnoreCaseContainingOrWtype_NameIgnoreCaseContainingOrLtype_NameIgnoreCaseContainingOrFtype_NameIgnoreCaseContainingOrNoteIgnoreCaseContaining(
 						term1, term2, term3, term4, term5, term6, term7));
+		model.addAttribute("count", getCount());
 		return "home";
 	}
 
