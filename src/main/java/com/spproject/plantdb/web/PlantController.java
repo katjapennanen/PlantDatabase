@@ -1,5 +1,8 @@
 package com.spproject.plantdb.web;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -23,7 +26,7 @@ import com.spproject.plantdb.domain.WaterTypeRepository;
 public class PlantController {
 
 	boolean ascOrDesc = true;
-
+	
 	@Autowired
 	private PlantRepository prepo;
 	@Autowired
@@ -32,17 +35,22 @@ public class PlantController {
 	private LightTypeRepository lrepo;
 	@Autowired
 	private FertilizerTypeRepository frepo;
-
+	
+	
 	// Login page
 	@RequestMapping(value = "/login")
 	public String login() {
 		return "login";
 	}
 
-	// Show all plants
+	// Show all plants and get plant count
 	@RequestMapping(value = "/home")
 	public String home(Model model) {
-		model.addAttribute("plants", prepo.findAll());
+		List<Plant> plants = new ArrayList<>();
+		plants = (List<Plant>) prepo.findAll();
+		int plantCount = plants.size();
+		model.addAttribute("plants", plants);
+		model.addAttribute("count", plantCount);
 		return "home";
 	}
 
