@@ -36,6 +36,7 @@ public class PlantController {
 	@Autowired
 	private FertilizerTypeRepository frepo;
 	
+	// Get the number of plants in the database
 	public int getCount() {
 		List<Plant> plants = new ArrayList<>();
 		plants = (List<Plant>) prepo.findAll();
@@ -49,10 +50,10 @@ public class PlantController {
 		return "login";
 	}
 
-	// Show all plants and get plant count
+	// Show all plants ordered by English name
 	@RequestMapping(value = "/home")
 	public String home(Model model) {
-		model.addAttribute("plants", prepo.findAll());
+		model.addAttribute("plants", prepo.findAllByOrderByEngNameAsc());
 		model.addAttribute("count", getCount());
 		return "home";
 	}
